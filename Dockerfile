@@ -13,9 +13,7 @@ LABEL version="2.1.0" \
 # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#docker-container-filesystem
 USER 0
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-COPY cleanup.sh /cleanup.sh
-RUN chmod +x /cleanup.sh
+COPY entrypoint.sh cleanup.sh /
+RUN chmod +x /cleanup.sh && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
