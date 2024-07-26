@@ -6,7 +6,7 @@ branding:
   color: green
 runs:
   using: docker
-  image: "ghcr.io/wwsean08/sonarqube-scan-action:test-static-image"
+  image: "docker://ghcr.io/wwsean08/sonarqube-scan-action:test-static-image"
   entrypoint: "/entrypoint.sh"
   post-entrypoint: "/cleanup.sh"
 inputs:
