@@ -3,10 +3,6 @@ name: Create Image
 on:
   workflow_call:
     inputs:
-      TAG:
-        required: true
-        description: The tag to give the container image
-        type: string
       PUSH:
         description: Whether or not to push the image to GHCR
         type: boolean
@@ -21,16 +17,6 @@ on:
       metadata:
         description: 'Build result metadata'
         value: ${{ jobs.build-and-push.outputs.metadata }}
-  workflow_dispatch:
-    inputs:
-      TAG:
-        required: true
-        description: The tag to give the container image
-        type: string
-      PUSH:
-        description: Whether or not to push the image to GHCR
-        type: boolean
-        default: true
 
 jobs:
   create-image:
