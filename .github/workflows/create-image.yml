@@ -55,7 +55,7 @@ jobs:
           push: ${{ inputs.PUSH }}
           context: .
           tags: |
-            ghcr.io/${{ github.repository_owner }}/sonarqube-scan-action:${{ input.TAG }}
+            ghcr.io/${{ github.repository_owner }}/sonarqube-scan-action:${{ inputs.TAG }}
       - name: Attest the image build
         uses: actions/attest-build-provenance@v1
         if: inputs.PUSH
