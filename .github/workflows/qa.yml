@@ -190,3 +190,12 @@ jobs:
       - name: Assert
         run: |
           ./test/assertFileExists ./test/example-project/.scannerwork/report-task.txt
+  buildImageTest:
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+    uses: ./.github/create-image.yml
+    with:
+      TAG: ${{ github.ref_name }}
+      PUSH: false
