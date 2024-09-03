@@ -6,7 +6,7 @@ branding:
   color: green
 runs:
   using: docker
-  image: docker://ghcr.io/wwsean08/sonarqube-scan-action:master
+  image: Dockerfile
   entrypoint: "/entrypoint.sh"
   post-entrypoint: "/cleanup.sh"
 inputs:
