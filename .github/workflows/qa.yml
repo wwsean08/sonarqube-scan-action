@@ -200,4 +200,4 @@ jobs:
       attestations: write
     uses: ./.github/workflows/create-image.yml
     with:
-      PUSH: ${{ github.event_name == 'pull_request' }}
+      PUSH: ${{ github.event_name == 'push' }}
