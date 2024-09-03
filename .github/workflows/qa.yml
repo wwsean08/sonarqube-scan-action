@@ -190,7 +190,7 @@ jobs:
       - name: Assert
         run: |
           ./test/assertFileExists ./test/example-project/.scannerwork/report-task.txt
-  buildTestImage:
+  buildTestImagePR:
     name: Build test image (PR)
     if: github.event_name == 'pull_request'
     permissions:
@@ -201,3 +201,14 @@ jobs:
     with:
       TAG: ${{ github.ref_name }}
       PUSH: false
+  buildTestImagePush:
+    name: Build test image (Push to master)
+    if: github.event_name == 'push'
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+    uses: ./.github/workflows/create-image.yml
+    with:
+      TAG: ${{ github.ref_name }}
+      PUSH: true

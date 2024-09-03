@@ -1,4 +1,4 @@
-name: Official SonarQube Scan
+name: SonarQube Scan
 description: >
   Scan your code with SonarQube to detect Bugs, Vulnerabilities and Code Smells in up to 27 programming languages!
 branding:
@@ -6,7 +6,7 @@ branding:
   color: green
 runs:
   using: docker
-  image: Dockerfile
+  image: docker://ghcr.io/wwsean08/sonarqube-scan-action:master
   entrypoint: "/entrypoint.sh"
   post-entrypoint: "/cleanup.sh"
 inputs:
