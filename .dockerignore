@@ -1,0 +1,7 @@
+.github
+.cirrus
+.cirrus.*
+.gitignore
+contributing.md
+action.yml
+README.md
