@@ -1,0 +1,49 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-image:
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+      packages: write
+    uses: ./.github/workflows/create-image.yml
+    with:
+      PUSH: true
+
+  create-release-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs:
+      - create-image
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup git config
+        run: |
+          git config user.name "Github Actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Update action.yml
+        run: |
+          git checkout -b release/${{ github.event.release.tag_name }}
+          yq -i '.runs.image = "docker://ghcr.io/${{ github.repository_owner }}/sonarqube-scan-action:${{ needs.create-image.outputs.digest }}"' action.yml
+          git add action.yml
+          git commit -m "Release ${{ github.event.release.tag_name }} docker image"
+          git push origin release/${{ github.event.release.tag_name }}
+
+      - name: Repoint tag and update floating tag
+        env:
+          BASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          floatingTag=${BASE_TAG%.*.*}
+          git tag -fa ${floatingTag}
+          git tag -fa ${BASE_TAG}
+          git push -f origin ${floatingTag}
+          git push -f origin ${BASE_TAG}
