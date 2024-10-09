@@ -33,6 +33,7 @@ jobs:
       - name: Update action.yml
         run: |
           git checkout -b release/${{ github.event.release.tag_name }}
+          echo '${{ toJSON(needs.create-image.outputs) }}'
           yq -i '.runs.image = "docker://ghcr.io/${{ github.repository_owner }}/sonarqube-scan-action:${{ needs.create-image.outputs.digest }}"' action.yml
           git add action.yml
           git commit -m "Release ${{ github.event.release.tag_name }} docker image"
