@@ -10,16 +10,20 @@ on:
     outputs:
       imageid:
         description: 'Image ID'
-        value: ${{ jobs.build-and-push.outputs.imageid }}
+        value: ${{ jobs.create-image.outputs.imageid }}
       digest:
         description: 'Image digest'
-        value: ${{ jobs.build-and-push.outputs.digest }}
+        value: ${{ jobs.create-image.outputs.digest }}
       metadata:
         description: 'Build result metadata'
-        value: ${{ jobs.build-and-push.outputs.metadata }}
+        value: ${{ jobs.create-image.outputs.metadata }}
 
 jobs:
   create-image:
+    outputs:
+      imageid: ${{ steps.build-and-push.outputs.imageid }}
+      digest: ${{ steps.build-and-push.outputs.imageid }}
+      metadata: ${{ steps.build-and-push.outputs.imageid }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
