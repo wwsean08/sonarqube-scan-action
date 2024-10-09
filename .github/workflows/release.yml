@@ -44,9 +44,11 @@ jobs:
         run: |
           floatingTagMajor=${BASE_TAG%.*.*}
           floatingTagMinor=${BASE_TAG%.*}
-          git tag -fa -m "${floatingTagMajor}" ${floatingTag}
-          git tag -fa -m "${floatingTagMinor}" ${floatingTag}
-          git tag -fa -m "${BASE_TAG}" ${BASE_TAG}
+          echo "Major Version: ${floatingTagMajor}"
+          echo "Major/Minor Version: ${floatingTagMinor}"
+          git tag -f -a -m "${floatingTagMajor}" ${floatingTagMajor}
+          git tag -f -a -m "${floatingTagMinor}" ${floatingTagMinor}
+          git tag -f -a -m "${BASE_TAG}" ${BASE_TAG}
           git push -f origin ${floatingTagMajor}
           git push -f origin ${floatingTagMinor}
           git push -f origin ${BASE_TAG}
