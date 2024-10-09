@@ -42,8 +42,11 @@ jobs:
         env:
           BASE_TAG: ${{ github.event.release.tag_name }}
         run: |
-          floatingTag=${BASE_TAG%.*.*}
-          git tag -fa ${floatingTag}
-          git tag -fa ${BASE_TAG}
-          git push -f origin ${floatingTag}
+          floatingTagMajor=${BASE_TAG%.*.*}
+          floatingTagMinor=${BASE_TAG%.*}
+          git tag -fa -m "${floatingTagMajor}" ${floatingTag}
+          git tag -fa -m "${floatingTagMinor}" ${floatingTag}
+          git tag -fa -m "${BASE_TAG}" ${BASE_TAG}
+          git push -f origin ${floatingTagMajor}
+          git push -f origin ${floatingTagMinor}
           git push -f origin ${BASE_TAG}
